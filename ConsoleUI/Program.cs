@@ -3,14 +3,15 @@ using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 
+RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-CarManager carManager = new CarManager(new EfCarDal());
-
-foreach (var car in carManager.GetCarDetails())
+Rental rent1 = new Rental
 {
-    Console.WriteLine(car.CarName + " - " + car.BrandName + " - " + car.ColorName  + " - " + car.DailyPrice);
-}
+    CarId = 1,
+    CustomerId = 2,
+};
 
+rentalManager.Add(rent1);
 
 
 // Color Test ---------------------------------------------------------
@@ -112,5 +113,39 @@ static void CarAddTest()
     {
         carManager.Add(car);
         Console.WriteLine(car.CarName + " eklendi.");
+    }
+}
+
+static void CustomerAddTest()
+{
+    CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+    List<Customer> customerList = new List<Customer>
+{
+    new Customer { UserId = 3, CompanyName = "Metro Travel"},
+    new Customer { UserId = 4, CompanyName = "Kapadokya Turizm"}
+};
+
+    foreach (var customer in customerList)
+    {
+        customerManager.Add(customer);
+    }
+}
+
+static void UserAddTest()
+{
+    UserManager userManager = new UserManager(new EfUserDal());
+    List<User> users = new List<User>
+{
+    new User{ FirstName = "Ayşe", LastName = "Öztürk", Email = "ayse123@gmail.com", Password = "Ayşe3"},
+    new User{ FirstName = "Mehmet", LastName = "Çakır", Email = "mehmet123@gmail.com", Password = "Mehmet10"},
+    new User{ FirstName = "Yusuf", LastName = "Sekizer", Email = "yusuf123@gmail.com", Password = "Yusuf8"},
+    new User{ FirstName = "İsmail", LastName = "Çalışkan", Email = "ismail123@gmail.com", Password = "İsmail15"},
+    new User{ FirstName = "Fatma", LastName = "Yılmaz", Email = "fatmac123@gmail.com", Password = "Fatmac2005"},
+    new User{ FirstName = "Elif", LastName = "Duman", Email = "elif123@gmail.com", Password = "Elif25"}
+};
+
+    foreach (var user in users)
+    {
+        userManager.Add(user);
     }
 }
