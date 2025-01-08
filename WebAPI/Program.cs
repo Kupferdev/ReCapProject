@@ -38,7 +38,9 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureContainer<ContainerBuilder>(
                 ContainerBuilder => { ContainerBuilder.RegisterModule(new AutofacBusinessModule()); });
 
+
 var app = builder.Build();
+app.UseDeveloperExceptionPage(); // Sadece geliþtirme ortamýnda kullanýlmalý.
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -46,6 +48,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
