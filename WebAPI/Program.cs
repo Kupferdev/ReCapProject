@@ -5,34 +5,43 @@ using Business.Concrete;
 using Business.DependencyResolvers.Autofac;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Core.Utilities.Security.Jwt;
+using Core.Utilities.Security.Encyption;
+using Core.Extensions;
+using Core.Utilities.IoC;
+using Core.DependencyResolvers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-//builder.Services.AddSingleton<IBrandService, BrandManager>();
-//builder.Services.AddSingleton<IBrandDal, EfBrandDal>();
+var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
-//builder.Services.AddSingleton<ICarService, CarManager>();
-//builder.Services.AddSingleton<ICarDal, EfCarDal>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidIssuer = tokenOptions.Issuer,
+            ValidAudience = tokenOptions.Audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+        };
+    });
 
-//builder.Services.AddSingleton<IColorService, ColorManager>();
-//builder.Services.AddSingleton<IColorDal, EfColorDal>();
+builder.Services.AddDependencyResolvers(new ICoreModule[] { new CoreModule() });
 
-//builder.Services.AddSingleton<ICustomerService, CustomerManager>();
-//builder.Services.AddSingleton<ICustomerDal, EfCustomerDal>();
-
-//builder.Services.AddSingleton<IRentalService, RentalManager>();
-//builder.Services.AddSingleton<IRentalDal, EfRentalDal>();
-
-//builder.Services.AddSingleton<IUserService, UserManager>(); 
-//builder.Services.AddSingleton<IUserDal, EfUserDal>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthorization();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureContainer<ContainerBuilder>(
@@ -40,9 +49,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
 
 var app = builder.Build();
-app.UseDeveloperExceptionPage(); // Sadece geliþtirme ortamýnda kullanýlmalý.
+app.UseDeveloperExceptionPage(); 
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -52,6 +60,8 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
