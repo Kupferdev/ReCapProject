@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,6 +22,8 @@ namespace Business.Concrete
         {
             _rentaldal = rentalDal;
         }
+        [PerformanceAspect(3)]
+        [CacheRemoveAspect("IRentalService.GetAll")]
         public IResult Add(Rental rental)
         {
             var carİsNull = _rentaldal.GetAll(r => r.CarId == rental.CarId).FirstOrDefault(r => r.ReturnDate == null);
@@ -37,7 +41,7 @@ namespace Business.Concrete
             _rentaldal.Delete(rental);
             return new SuccessResult(Messages.RentalDeleted);
         }
-
+        [CacheAspect]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentaldal.GetAll(), Messages.RentalListed);
