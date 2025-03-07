@@ -2,20 +2,13 @@
     <span class="visually-hidden">Loading...</span>
 </div>
 <table *ngIf="dataLoaded==true" class="table">
-    <thead>
-        <tr>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Color Name</th>
-            <th>Daily Price</th>
-        </tr>
-    </thead>
-    <tr *ngFor="let Car of cars">
-        <td>{{Car.brandName}}</td>
-        <td>{{Car.carName}}</td>
-        <td>{{Car.colorName}}</td>
-        <td>{{Car.dailyPrice}}</td>
-
-    </tr>
-
+    <ul class="list-group">
+        <li *ngFor="let Car of cars"
+            routerLink="cars/cardetail/{{Car.carId}}"
+            (click) = "setCurrentCar(Car)"
+            [class]= "getCurrentCarClass(Car)">
+            {{Car.brandName}} {{Car.carName}} {{Car.colorName}} <em style="background: none;">{{Car.dailyPrice}}€</em>
+        </li>
+        </ul>
 </table>
+

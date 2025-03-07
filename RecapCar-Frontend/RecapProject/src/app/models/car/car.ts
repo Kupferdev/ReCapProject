@@ -1,12 +1,9 @@
 export interface Car {
+    carId:number,
     carName:string,
     brandName:string,
     colorName:string,
+    description:string,
+    modelYear:number,
     dailyPrice:number;
 }
-
-
-/*public string CarName { get; set; }
-public string BrandName { get; set; }
-public string ColorName { get; set; }
-public decimal DailyPrice { get; set; }*/

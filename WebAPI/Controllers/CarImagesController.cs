@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbycarimages")]
-        public IActionResult GetByCarImages([FromForm] int carId)
+        public IActionResult GetByCarImages(int carId)
         {
             var result = _carImageService.GetByCarImages(carId);
             if (result.Success)

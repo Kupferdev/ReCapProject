@@ -16,6 +16,30 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, ReCapProjectContext>, ICarDal
     {
+        public List<CarDetailDto> GetFirstCarDetail(int Id)
+        {
+            using (ReCapProjectContext context = new ReCapProjectContext())
+            {
+                var result = from c in context.Cars
+                             join b in context.Brands
+                             on c.BrandId equals b.Id
+                             join clr in context.Colors
+                             on c.ColorId equals clr.Id
+                             where c.Id == Id
+                             select new CarDetailDto
+                             {
+                                 CarId = c.Id,
+                                 BrandName = b.BrandName,
+                                 CarName = c.CarName,
+                                 ColorName = clr.ColorName,
+                                 DailyPrice = c.DailyPrice,
+                                 Description = c.Description,
+                                 ModelYear = c.ModelYear
+                             };
+                return result.ToList();
+            }
+        }
+
         public List<CarDetailDto> GetCarDetails()
         {
             using (ReCapProjectContext context = new ReCapProjectContext())
@@ -27,10 +51,13 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.ColorId equals clr.Id
                              select new CarDetailDto
                              {
+                                 CarId = c.Id,
                                  BrandName = b.BrandName,
                                  CarName = c.CarName,
                                  ColorName = clr.ColorName,
-                                 DailyPrice = c.DailyPrice
+                                 DailyPrice = c.DailyPrice, 
+                                 Description = c.Description,
+                                 ModelYear = c.ModelYear
                              };
                 return result.ToList();
             }
