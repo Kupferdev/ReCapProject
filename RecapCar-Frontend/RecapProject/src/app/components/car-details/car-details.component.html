@@ -1,6 +1,62 @@
-<div *ngFor="let Car of car"> {{Car.description}}</div>
-<!-- car-detail.component.html -->
-<div *ngFor="let safeUrl of safeImageUrls">
-    <img [src]="safeUrl" alt="Car Image">
-    <img src="/src/assets/images/simsek.jpeg">
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+        <h3>Araba Görselleri</h3>
+
+        <div *ngIf="carImages.length > 0">
+            <div id="carImageCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item" *ngFor="let image of carImages; let i = index" [class.active]="i === 0">
+                        <img [src]="image.imagePath" class="d-block w-100" alt="Araba Görseli">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carImageCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Önceki</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carImageCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Sonraki</span>
+                </button>
+            </div>
+        </div>
+
+        <p *ngIf="carImages.length === 0" class="text-muted">Görsel bulunamadı.</p>
+    </div>
+
+
+      <div class="col-md-4">
+          <h3>Araba Detayları</h3>
+          <table class="table table-striped" *ngIf="car.length > 0">
+              <tbody *ngFor="let Car of car">
+                  <tr>
+                      <th scope="row">Araç Adı</th>
+                      <td>{{ Car.carName }}</td>
+                  </tr>
+                  <tr>
+                      <th scope="row">Marka</th>
+                      <td>{{ Car.brandName }}</td>
+                  </tr>
+                  <tr>
+                      <th scope="row">Renk</th>
+                      <td>{{ Car.colorName }}</td>
+                  </tr>
+                  <tr>
+                      <th scope="row">Açıklama</th>
+                      <td>{{ Car.description }}</td>
+                  </tr>
+                  <tr>
+                      <th scope="row">Model Yılı</th>
+                      <td>{{ Car.modelYear }}</td>
+                  </tr>
+                  <tr>
+                      <th scope="row">Günlük Fiyat</th>
+                      <td>{{ Car.dailyPrice | currency:'TRY':'symbol-narrow' }}</td>
+                  </tr>
+              </tbody>
+          </table>
+          <p *ngIf="car.length === 0" class="text-muted">Araba bulunamadı.</p>
+      </div>
+    </div>
   </div>
+

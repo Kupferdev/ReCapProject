@@ -19,10 +19,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class CarDetailsComponent implements OnInit {
   car: Car[] = [];
   carImages: CarImage[] = [];
-  safeImageUrls: SafeUrl[] = [];
 
-
-  constructor(private carService: CarService, private activatedRoute: ActivatedRoute, private sanitizer:DomSanitizer) { }
+  constructor(private carService: CarService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -31,22 +29,20 @@ export class CarDetailsComponent implements OnInit {
         this.getCarImages(params["carId"]);
       }
     })
-    
   }
 
   getCarById(carId: number) {
     this.carService.getCarById(carId).subscribe(response => {
       this.car = response.data;
+      console.log(response.data);
     })
   }
 
   getCarImages(carId: number) {
     this.carService.getCarImages(carId).subscribe(response => {
       this.carImages = response.data;
-      this.safeImageUrls = this.carImages.map(image =>
-        this.sanitizer.bypassSecurityTrustResourceUrl(`https://localhost:44398/${image.imagePath}`)
-      );
     });
+
   }
 
 }
