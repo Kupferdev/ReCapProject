@@ -5,11 +5,13 @@ import { Color } from '../../models/color/color';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { response } from 'express';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ColorPipePipe } from "../../pipes/color/color-pipe.pipe";
 
 @Component({
   selector: 'app-color',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule, ColorPipePipe],
   providers:[ColorService, HttpClientModule],
   templateUrl: './color.component.html',
   styleUrl: './color.component.css'
@@ -18,6 +20,7 @@ export class ColorComponent implements OnInit {
   colors:Color[] = [];
   dataLoaded = false;
   currentColor:Color;
+  filterText = "";
 
   constructor(private colorService:ColorService) {}
 

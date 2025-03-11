@@ -1,14 +1,41 @@
 <div *ngIf="dataLoaded == false" class="spinner-border text-warning" role="status">
     <span class="visually-hidden">Loading...</span>
 </div>
-<table *ngIf="dataLoaded==true" class="table">
-    <ul class="list-group">
-        <li *ngFor="let Car of cars"
-            routerLink="cars/cardetail/{{Car.carId}}"
-            (click) = "setCurrentCar(Car)"
-            [class]= "getCurrentCarClass(Car)">
-            {{Car.brandName}} {{Car.carName}} {{Car.colorName}} <em style="background: none;">{{Car.dailyPrice}}€</em>
-        </li>
-        </ul>
+
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Car Search</label>
+    <input type="text" id="filterText" class="form-control" [(ngModel)]="filterText" placeholder="Alfa 156">
+</div>
+
+<div *ngIf="filterText" class="alert alert-primary">
+    {{filterText}} listeleniyor...
+</div>
+
+<table *ngIf="dataLoaded" class="table table-striped table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>Marka</th>
+            <th>Model</th>
+            <th>Renk</th>
+            <th>Günlük Ücret (€)</th>
+            <th>Detay</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let car of cars |carPipe : filterText" 
+            [class.active]="getCurrentCarClass(car)" 
+            (click)="setCurrentCar(car)">
+            <td>{{ car.brandName }}</td>
+            <td>{{ car.carName }}</td>
+            <td>{{ car.colorName }}</td>
+            <td><em>{{ car.dailyPrice }}€</em></td>
+            <td>
+                <a [routerLink]="'cars/cardetail/' + car.carId" class="btn btn-primary btn-sm">
+                    İncele
+                </a>
+            </td>
+        </tr>
+    </tbody>
 </table>
+
 

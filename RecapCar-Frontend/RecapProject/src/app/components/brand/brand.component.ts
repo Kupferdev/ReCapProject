@@ -4,12 +4,14 @@ import { BrandService } from '../../services/brand/brand.service';
 import { response } from 'express';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { BrandPipePipe } from "../../pipes/brand/brand-pipe.pipe";
 //import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-brand',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule, BrandPipePipe],
   providers: [BrandService],
   templateUrl: './brand.component.html',
   styleUrl: './brand.component.css'
@@ -18,6 +20,8 @@ export class BrandComponent implements OnInit {
   brands: Brand[] = [];
   dataLoaded = false;
   currentBrand:Brand;
+  filterText = "";
+
 
   constructor(private brandService: BrandService) { }
 

@@ -1,5 +1,15 @@
+
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Brand Search</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" placeholder="Alfa Romeo" id="filterText">
+</div>
+
+<div *ngIf="filterText" class="alert alert-primary">
+    {{filterText}} listeleniyor...
+</div>
+
 <ul class="list-group">
-    <li *ngFor="let Brand of brands"
+    <li *ngFor="let Brand of brands |brandPipe : filterText"
     routerLink="cars/brand/{{Brand.id}}"
     (click) = "setCurrentBrand(Brand)"
     [class] = "getCurrentBrandClass(Brand)">

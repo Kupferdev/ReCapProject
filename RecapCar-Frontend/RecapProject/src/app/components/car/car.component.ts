@@ -5,11 +5,13 @@ import { response } from 'express';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CarPipePipe } from "../../pipes/car/car-pipe.pipe";
 
 @Component({
   selector: 'app-car',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule, CarPipePipe],
   providers: [CarService],
   templateUrl: './car.component.html',
   styleUrl: './car.component.css'
@@ -18,6 +20,7 @@ export class CarComponent implements OnInit {
   cars: Car[] = [];
   dataLoaded = false;
   currentCar:Car;
+  filterText = "";
 
   constructor(private carService: CarService, private activatedRoute: ActivatedRoute, private router : Router) { }
 

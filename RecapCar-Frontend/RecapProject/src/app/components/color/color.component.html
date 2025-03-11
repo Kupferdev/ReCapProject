@@ -2,8 +2,17 @@
     <span class="visually-hidden">Loading...</span>
 </div>
 
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Color Search</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="Kırmızı">
+</div>
+
+<div *ngIf="filterText" class="alert alert-primary">
+    {{filterText}} listeleniyor...
+</div>
+
 <ul class="list-group">
-<li *ngFor="let Color of colors"
+<li *ngFor="let Color of colors |colorPipe : filterText"
     routerLink="cars/color/{{Color.id}}"
     (click) = "setCurrentColor(Color)"
     [class]= "getCurrentColorClass(Color)">
