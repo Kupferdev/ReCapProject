@@ -1,20 +1,26 @@
 <div class="container">
     <app-navbar></app-navbar>
 
-    <div class="row" *ngIf="isCarDetailPage">
+    <div class="row" *ngIf="isCarPage">
         <router-outlet></router-outlet>
     </div>
 
-    <ng-container *ngIf="!isCarDetailPage">
-        <div class="row">
-            <div class="col-md-4"><app-brand></app-brand></div>
-            <div class="col-md-4"><app-color></app-color></div>
-            <div class="col-md-4"><router-outlet></router-outlet></div>
+    <ng-container *ngIf="!isCarPage">
+        <div class="row" *ngIf="isCarDetailPage">
+            <router-outlet></router-outlet>
         </div>
 
-        <div class="row">
-            <div class="col-md-6"><app-customer></app-customer></div>
-            <div class="col-md-6"><app-rental></app-rental></div>
+        <div *ngIf="!isCarDetailPage">
+            <div class="row">
+                <div class="col-md-4"><app-brand></app-brand></div>
+                <div class="col-md-4"><app-color></app-color></div>
+                <div class="col-md-4"><router-outlet></router-outlet></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6"><app-customer></app-customer></div>
+                <div class="col-md-6"><app-rental></app-rental></div>
+            </div>
         </div>
     </ng-container>
 </div>

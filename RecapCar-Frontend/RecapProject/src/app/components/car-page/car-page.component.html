@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-md-2">
+
+        <div style="margin: 30px 0 ;" class="form-floating">
+            <select class="form-select" id="brandSelect" aria-label="Floating label select example">
+                <option selected></option>
+                <option *ngFor="let brand of brands" value="{{brand.id}}">{{brand.brandName}}</option>
+            </select>
+            <label for="brandSelect">Brands</label>
+        </div>
+
+        <div style="margin: 30px 0 ;" class="form-floating">
+            <select class="form-select" id="colorSelect" aria-label="Floating label select example">
+                <option selected></option>
+                <option *ngFor="let color of colors" value="{{color.id}}">{{color.colorName}}</option>
+            </select>
+            <label for="colorSelect">Colors</label>
+        </div>
+
+    </div>
+    <div class="col-md-10">
+        <table class="table table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Marka</th>
+                    <th>Model</th>
+                    <th>Renk</th>
+                    <th>Üretim yılı</th>
+                    <th>Açıklama</th>
+                    <th>Günlük Ücret</th>
+                    <th>Detay</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let car of cars" [class.active]="getCurrentCarClass(car)" (click)="setCurrentCar(car)">
+                    <td>{{ car.brandName }}</td>
+                    <td>{{ car.carName }}</td>
+                    <td>{{ car.colorName }}</td>
+                    <td>{{car.modelYear}}</td>
+                    <td>{{car.description}}</td>
+                    <td>{{ car.dailyPrice | currency }}</td>
+                    <td>
+                        <button (click)="goToCarDetail(car.carId)" class="btn btn-primary btn-sm">
+                            İncele
+                        </button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

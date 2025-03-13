@@ -21,6 +21,7 @@ export class CarComponent implements OnInit {
   dataLoaded = false;
   currentCar:Car;
   filterText = "";
+  
 
   constructor(private carService: CarService, private activatedRoute: ActivatedRoute, private router : Router) { }
 

@@ -16,22 +16,21 @@ import { CarDetailsComponent } from "./components/car-details/car-details.compon
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, BrandComponent, HttpClientModule, ColorComponent, CustomerComponent, RentalComponent, RouterModule, CommonModule, CarDetailsComponent],
+  imports: [RouterOutlet, NavbarComponent, BrandComponent, HttpClientModule, ColorComponent, CustomerComponent, RentalComponent, RouterModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'RecapProject';
-  isCarDetailPage = false;
+  public isCarDetailPage = false;
+  public isCarPage = false;
 
 
-  constructor(private router: Router) { }
-
-  ngAfterViewInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.isCarDetailPage = event.urlAfterRedirects.startsWith('/cars/cardetail/');
-      }
+  constructor(private router: Router) {
+    this.router.events.subscribe(() => {
+      this.isCarDetailPage = this.router.url.includes('/cars/cardetail/');
+      this.isCarPage = this.router.url === '/cars/carpage';
     });
   }
+  
 }
