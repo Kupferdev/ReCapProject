@@ -12,12 +12,13 @@ import { Brand } from '../../models/brand/brand';
 import { HttpClientModule } from '@angular/common/http';
 import { ColorService } from '../../services/color/color.service';
 import { Color } from '../../models/color/color';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-car-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
   providers: [CarService, BrandService, ColorService],
   templateUrl: './car-page.component.html',
   styleUrl: './car-page.component.css'
@@ -26,6 +27,8 @@ export class CarPageComponent implements OnInit {
   cars: Car[] = [];
   brands: Brand[] = [];
   colors: Color[] = [];
+  brandFilter: number;
+  colorFilter: number;
   currentCar: Car;
 
 
@@ -34,18 +37,6 @@ export class CarPageComponent implements OnInit {
     this.getCars();
     this.getBrands();
     this.getColors();
-  }
-
-  setCurrentCar(car: Car) {
-    this.currentCar = car;
-  }
-
-  getCurrentCarClass(car: Car) {
-    if (car == this.currentCar) {
-      return "list-group-item active"
-    } else {
-      return "list-group-item"
-    }
   }
 
   getCars() {
@@ -60,9 +51,21 @@ export class CarPageComponent implements OnInit {
     })
   }
 
-  getColors(){
-    this.colorService.getColors().subscribe(response=> {
+  getColors() {
+    this.colorService.getColors().subscribe(response => {
       this.colors = response.data;
+    })
+  }
+
+  getCarsByBrand(id: number) {
+    this.carService.getCarsByBrand(id).subscribe(response => {
+      this.cars = response.data;
+    })
+  }
+
+  getCarsByColor(id: number) {
+    this.carService.getCarsByColor(id).subscribe(response => {
+      this.cars = response.data;
     })
   }
 

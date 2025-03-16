@@ -1,20 +1,23 @@
 <div class="row">
     <div class="col-md-2">
 
-        <div style="margin: 30px 0 ;" class="form-floating">
-            <select class="form-select" id="brandSelect" aria-label="Floating label select example">
+        <h4>Filtreler</h4>
+        <div style="margin: 30px 0;" class="form-floating">
+            <select [(ngModel)]="brandFilter" class="form-select" id="brandSelect" aria-label="Floating label select example">
                 <option selected></option>
                 <option *ngFor="let brand of brands" value="{{brand.id}}">{{brand.brandName}}</option>
             </select>
-            <label for="brandSelect">Brands</label>
+            <label for="brandSelect">Marka</label>
+            <button style="margin-top: 16px;" (click)="getCarsByBrand(brandFilter)" class="btn btn-primary w-100">Markaya göre filtrele</button>
         </div>
 
         <div style="margin: 30px 0 ;" class="form-floating">
-            <select class="form-select" id="colorSelect" aria-label="Floating label select example">
+            <select [(ngModel)]="colorFilter"  class="form-select" id="colorSelect" aria-label="Floating label select example">
                 <option selected></option>
                 <option *ngFor="let color of colors" value="{{color.id}}">{{color.colorName}}</option>
             </select>
-            <label for="colorSelect">Colors</label>
+            <label for="colorSelect">Renk</label>
+            <button style="margin-top: 16px;" (click)="getCarsByColor(colorFilter)" class="btn btn-primary w-100">Renge göre filtrele</button>
         </div>
 
     </div>
@@ -32,7 +35,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let car of cars" [class.active]="getCurrentCarClass(car)" (click)="setCurrentCar(car)">
+                <tr *ngFor="let car of cars">
                     <td>{{ car.brandName }}</td>
                     <td>{{ car.carName }}</td>
                     <td>{{ car.colorName }}</td>

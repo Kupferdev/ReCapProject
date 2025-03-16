@@ -25,10 +25,10 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.BrandId equals b.Id
                              join clr in context.Colors
                              on c.ColorId equals clr.Id
-                             where c.Id == Id
+                             where c.CarId == Id
                              select new CarDetailDto
                              {
-                                 CarId = c.Id,
+                                 CarId = c.CarId,
                                  BrandName = b.BrandName,
                                  CarName = c.CarName,
                                  ColorName = clr.ColorName,
@@ -51,7 +51,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.ColorId equals clr.Id
                              select new CarDetailDto
                              {
-                                 CarId = c.Id,
+                                 CarId = c.CarId,
                                  BrandName = b.BrandName,
                                  CarName = c.CarName,
                                  ColorName = clr.ColorName,

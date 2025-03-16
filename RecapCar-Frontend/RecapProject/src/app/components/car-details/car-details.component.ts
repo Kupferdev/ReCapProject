@@ -7,6 +7,7 @@ import { Car } from '../../models/car/car';
 import { CarImage } from '../../models/carImage/carImage';
 import { response } from 'express';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { RentalService } from '../../services/rental/rental.service';
 
 @Component({
   selector: 'app-car-details',
@@ -20,19 +21,19 @@ export class CarDetailsComponent implements OnInit {
   car: Car[] = [];
   carImages: CarImage[] = [];
 
-  constructor(private carService: CarService, private activatedRoute: ActivatedRoute) { }
+  constructor(private carService: CarService,  private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      if (params["carId"]) {
-        this.getCarById(params["carId"]);
-        this.getCarImages(params["carId"]);
+      if (params["Id"]) {
+        this.getCarById(params["Id"]);
+        this.getCarImages(params["Id"]);
       }
     })
   }
 
-  getCarById(carId: number) {
-    this.carService.getCarById(carId).subscribe(response => {
+  getCarById(Id: number) {
+    this.carService.getCarById(Id).subscribe(response => {
       this.car = response.data;
       console.log(response.data);
     })
