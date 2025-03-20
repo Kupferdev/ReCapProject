@@ -23,8 +23,8 @@ namespace Business.Concrete
         {
             _rentaldal = rentalDal;
         }
-        [PerformanceAspect(3)]
-        [CacheRemoveAspect("IRentalService.GetAll")]
+        //[PerformanceAspect(3)]
+        //[CacheRemoveAspect("IRentalService.GetAll")]
         public IResult Add(Rental rental)
         {
             var carİsNull = _rentaldal.GetAll(r => r.CarId == rental.CarId).FirstOrDefault(r => r.ReturnDate == null);

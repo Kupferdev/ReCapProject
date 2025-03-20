@@ -1,10 +1,7 @@
-export interface Rental {
-    id: number;
-    carName: string;
-    firstName: string;
-    lastName: string;
-    companyName: string;
-    email: string;
-    rentDate: string;
-    returnDate: string;
+export interface Rental{
+    carId:number;
+    customerId:number;
+    isReturn:boolean;
+    rentDate:string;
+    returnDate:string;
 }

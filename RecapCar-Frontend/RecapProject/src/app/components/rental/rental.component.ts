@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RentalService } from '../../services/rental/rental.service';
-import { Rental } from '../../models/rental/rental';
+import { RentalDetails } from '../../models/rental/rentalDetails';
 
 @Component({
   selector: 'app-rental',
@@ -12,7 +12,7 @@ import { Rental } from '../../models/rental/rental';
   styleUrl: './rental.component.css'
 })
 export class RentalComponent implements OnInit {
-  rentals: Rental[] = [];
+  rentals: RentalDetails[] = [];
   dataLoaded = false;
 
   constructor(private rentalService: RentalService) { }

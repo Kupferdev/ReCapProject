@@ -1,6 +1,6 @@
 import { ResponseModel } from "../response.model";
-import { Rental } from "./rental";
+import { RentalDetails } from "./rentalDetails";
 
 export interface RentalResponseModel extends ResponseModel{
-    data: Rental[];
+    data: RentalDetails[];
 }
